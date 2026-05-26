@@ -294,3 +294,86 @@ body {
         box-shadow: 0 0 15px rgba(252, 129, 129, 0.3);
     }
 }
+
+// Markier-Bereich
+.markier-leiste {
+    display:flex;
+    gap: 0.5rem;
+}
+
+.markier-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &.aktiv {
+        border: 2px solid $perlen-weiss;
+        box-shadow: 0 0 10 rgba(255, 255, 255, 0.4);
+        transform: scale(1.2);
+    }
+}
+
+// Toolbar 
+.rich-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toolbar-gruppe {
+    display: flex;
+    gap: 0.4rem; 
+    align-items: center;
+}
+
+.toolbar-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: $perlen-weiss;
+    width: 36px;
+    height: 36px; 
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($akzent-hell, 0.3);
+    }
+}
+
+.farb-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%; 
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: scale(1.2);
+        border-color: $perlen-weiss;
+    }
+}
+
+// Placeholder für contenteditable
+.grosses-textfeld[data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: rgba($perlen-weiss, 0.3);
+    pointer-events: none;
+}
