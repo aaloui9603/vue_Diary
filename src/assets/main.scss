@@ -167,8 +167,10 @@ body {
         min-height: 350px;
     }
 
-    &::placeholder {
+    &[data-placeholder]:empty::before {
+        content: attr(data-placeholder);
         color: rgba($perlen-weiss, 0.3);
+        pointer-events: none;
     }
 
     &:focus {
@@ -207,6 +209,78 @@ body {
         &:hover {
             transform: scale(1.15);
         }
+    }
+}
+
+// ===========================
+// RICH TOOLBAR
+// ===========================
+.rich-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.toolbar-gruppe {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.toolbar-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: $perlen-weiss;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($akzent-hell, 0.3);
+    }
+}
+
+.farb-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        transform: scale(1.2);
+        border-color: $perlen-weiss;
+    }
+}
+
+.markier-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        transform: scale(1.15);
+    }
+
+    &.aktiv {
+        border: 2px solid $perlen-weiss;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        transform: scale(1.2);
     }
 }
 
@@ -278,6 +352,23 @@ body {
     margin-left: auto;
 }
 
+.bearbeiten-btn {
+    background: rgba($akzent-hell, 0.15);
+    border: 1px solid rgba($akzent-hell, 0.3);
+    border-radius: 8px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    min-width: 32px;
+    min-height: 32px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: rgba($akzent-hell, 0.35);
+        box-shadow: 0 0 15px rgba($akzent-hell, 0.3);
+    }
+}
+
 .loeschen-btn {
     background: rgba(252, 129, 129, 0.15);
     border: 1px solid rgba(252, 129, 129, 0.3);
@@ -295,85 +386,230 @@ body {
     }
 }
 
-// Markier-Bereich
-.markier-leiste {
-    display:flex;
-    gap: 0.5rem;
+// ===========================
+// BILDER — Mobile First
+// ===========================
+.bild-upload-bereich {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.markier-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid transparent;
+.bild-upload-btn {
+    @include glass-card;
+    padding: 0.6rem 1.2rem;
+    color: $perlen-weiss;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.2s ease;
+    border: 1px solid rgba($akzent-hell, 0.3);
+
+    &:hover {
+        background: rgba($akzent-hell, 0.2);
+    }
+}
+
+.bild-zaehler {
+    color: rgba($perlen-weiss, 0.5);
+    font-size: 0.85rem;
+}
+
+.bild-galerie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.bild-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    @include ab-tablet {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.vorschau-bild {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid rgba($akzent-hell, 0.3);
+}
+
+.bild-loeschen {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(252, 129, 129, 0.9);
+    border: none;
+    color: white;
+    font-size: 0.7rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+// ===========================
+// LIGHTBOX
+// ===========================
+.bild-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.bild-wrapper:hover .bild-overlay {
+    opacity: 1;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.lightbox-inhalt {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: default;
+}
+
+.lightbox-bild {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(99, 179, 237, 0.3);
+}
+
+.lightbox-schliessen {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(252, 129, 129, 0.9);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
 
     &:hover {
-        transform: scale(1.15);
-    }
-
-    &.aktiv {
-        border: 2px solid $perlen-weiss;
-        box-shadow: 0 0 10 rgba(255, 255, 255, 0.4);
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 }
 
-// Toolbar 
-.rich-toolbar {
+// ===========================
+// PDF & UPLOAD LEISTE
+// ===========================
+.upload-leiste {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.toolbar-gruppe {
-    display: flex;
-    gap: 0.4rem; 
     align-items: center;
+    gap: 0.75rem;
 }
 
-.toolbar-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+.pdf-upload-btn {
+    @include glass-card;
+    padding: 0.6rem 1.2rem;
     color: $perlen-weiss;
-    width: 36px;
-    height: 36px; 
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: all 0.2s ease;
+    border: 1px solid rgba($akzent-hell, 0.3);
 
     &:hover {
-        background: rgba($akzent-hell, 0.3);
+        background: rgba($akzent-hell, 0.2);
     }
 }
 
-.farb-btn {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%; 
-    border: 2px solid rgba(255, 255, 255, 0.2);
+.pdf-anzeige {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba($perlen-weiss, 0.8);
+    font-size: 0.85rem;
+}
+
+.pdf-loeschen {
+    background: rgba(252, 129, 129, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: white;
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdf-anhang {
+    margin-top: 0.5rem;
+}
+
+.pdf-link {
+    color: $akzent-hell;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s ease;
 
     &:hover {
-        transform: scale(1.2);
-        border-color: $perlen-weiss;
+        color: $akzent-glow;
+        text-decoration: underline;
     }
 }
 
-// Placeholder für contenteditable
-.grosses-textfeld[data-placeholder]:empty::before {
-    content: attr(data-placeholder);
-    color: rgba($perlen-weiss, 0.3);
-    pointer-events: none;
+// ===========================
+// SWIPER SLIDER
+// ===========================
+.notizen-slider {
+    width: 100%;
+    padding: 1rem 0 3rem 0 !important;
+
+    .swiper-pagination-bullet {
+        background: $akzent-hell;
+        opacity: 0.5;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: $akzent-glow;
+        opacity: 1;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: $akzent-glow;
+        transform: scale(0.7);
+    }
 }

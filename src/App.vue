@@ -5,9 +5,16 @@ import DiaryList from './components/DiaryList.vue'
 
 const istGestartet = ref(false)
 const notizen = ref([])
+const zuBearbeitendeNotiz = ref(null)
 
 const notizLoeschen = (id) => {
   notizen.value = notizen.value.filter(n => n.id !== id)
+  localStorage.setItem('vue-diary-notizen', JSON.stringify(notizen.value))
+}
+
+const notizBearbeiten = (notiz) => {
+  zuBearbeitendeNotiz.value = notiz
+  notizen.value = notizen.value.filter(n => n.id !== notiz.id)
   localStorage.setItem('vue-diary-notizen', JSON.stringify(notizen.value))
 }
 </script>
@@ -23,8 +30,17 @@ const notizLoeschen = (id) => {
     </div>
 
     <div v-else>
-      <DiaryEditor :notizen="notizen" @notiz-gespeichert="notizen = $event" />
-      <DiaryList :notizen="notizen" @notiz-loeschen="notizLoeschen" />
+      <DiaryEditor
+        :notizen="notizen"
+        :zuBearbeiten="zuBearbeitendeNotiz"
+        @notiz-gespeichert="notizen = $event"
+        @bearbeitung-fertig="zuBearbeitendeNotiz = null"
+      />
+      <DiaryList
+        :notizen="[...notizen].sort((a, b) => b.id - a.id)"
+        @notiz-loeschen="notizLoeschen"
+        @notiz-bearbeiten="notizBearbeiten"
+      />
     </div>
 
   </div>
