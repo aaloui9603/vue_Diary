@@ -1,5 +1,6 @@
 <script setup>
 defineProps({ notizen: Array })
+const emit = defineEmits(['notiz-loeschen'])
 </script>
 
 <template>
@@ -18,7 +19,13 @@ defineProps({ notizen: Array })
     >
       <div class="notiz-header">
         <h3>{{ notiz.titel }}</h3>
-        <span class="notiz-datum">{{ notiz.datum }}</span>
+        <div class="notiz-actions">
+          <span class="notiz-datum">{{ notiz.datum }}</span>
+          <button
+            class="loeschen-btn"
+            @click="emit('notiz-loeschen', notiz.id)"
+          >🗑️</button>
+        </div>
       </div>
       <p>{{ notiz.inhalt }}</p>
     </div>

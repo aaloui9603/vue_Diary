@@ -5,6 +5,11 @@ import DiaryList from './components/DiaryList.vue'
 
 const istGestartet = ref(false)
 const notizen = ref([])
+
+const notizLoeschen = (id) => {
+  notizen.value = notizen.value.filter(n => n.id !== id)
+  localStorage.setItem('vue-diary-notizen', JSON.stringify(notizen.value))
+}
 </script>
 
 <template>
@@ -19,7 +24,7 @@ const notizen = ref([])
 
     <div v-else>
       <DiaryEditor :notizen="notizen" @notiz-gespeichert="notizen = $event" />
-      <DiaryList :notizen="notizen" />
+      <DiaryList :notizen="notizen" @notiz-loeschen="notizLoeschen" />
     </div>
 
   </div>
