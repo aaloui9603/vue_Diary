@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import DiaryEditor from './components/DiaryEditor.vue';
+import DiaryList from './components/DiaryList.vue';
+
 const istGestartet = ref(false)
 </script>
 
@@ -12,7 +15,8 @@ const istGestartet = ref(false)
       <button @click="istGestartet = true">Tagebuch öffnen ✨</button>
     </div>
     <div v-else>
-      <h2>Willkommen in deinem Tagebuch 💙</h2>
+      <DiaryEditor  />
+      <DiaryList />
     </div>
   </div>
 
