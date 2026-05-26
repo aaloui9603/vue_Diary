@@ -22,14 +22,16 @@ const notizBearbeiten = (notiz) => {
 <template>
   <div class="app-container">
 
-    <div v-if="!istGestartet" class="landing-card">
-      <div class="pearl-ring"></div>
-      <h1>📔 Vue-Diary</h1>
-      <p>Mein persönliches & digitales Tagebuch<br>schreibe, markiere und speichere deine Gedanken</p>
-      <button @click="istGestartet = true">Tagebuch öffnen ✨</button>
+    <div v-if="!istGestartet" class="landing-wrapper">
+      <div class="landing-card">
+        <div class="pearl-ring"></div>
+        <h1>📔 Vue-Diary</h1>
+        <p>Mein persönliches & digitales Tagebuch<br>schreibe, markiere und speichere deine Gedanken</p>
+        <button @click="istGestartet = true">Tagebuch öffnen ✨</button>
+      </div>
     </div>
 
-    <div v-else>
+    <div v-else class="tagebuch-wrapper">
       <DiaryEditor
         :notizen="notizen"
         :zuBearbeiten="zuBearbeitendeNotiz"
