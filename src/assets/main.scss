@@ -108,3 +108,104 @@ body {
     @include pearl-ring;
 }
 
+// Diary Editor stylen 
+.diarty-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+
+    @include ab-tablet {
+        padding: 1.5rem;
+    }
+
+    @include ab-desktop {
+        padding: 2rem; 
+    }
+}
+
+.titel-feld {
+    @include glass-card;
+    width: 100%; 
+    padding: 0.85rem 1rem;
+    color: $perlen-weiss; 
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    font-family: 'Segoe UI', sans-serif; 
+    background: rgba(255, 255, 255, 0.06);
+
+    &::placeholder {
+        color:rgba($perlen-weiss, 0.35);
+    }
+
+    &:focus {
+        border: 1px solid rgba($akzent-hell, 0.4);
+        box-shadow: 0 0 20px rgba($akzent-hell, 0.2);
+    }
+}
+
+.grosses-textfeld {
+    @include glass-card;
+    @include pearl-effect;
+    width: 100%; 
+    min-height: 200px; 
+    padding: 1.25rem;
+    color: $perlen-weiss;
+    font-size: 1rem;
+    line-height: 1.8;
+    resize: vertical;
+    border: none;
+    outline: none; 
+    font-family: 'Segoe UI', sans-serif; 
+
+    @include ab-tablet {
+        min-height: 280px; 
+    }
+
+    @include ab-desktop {
+        min-height: 350px;
+    }
+
+    &::placeholder {
+        color: rgba($perlen-weiss, 0.3);
+    }
+
+    &:focus {
+        border: 1px solid rgba($akzent-hell, 0.4);
+        box-shadow: 0 0 20px rgba($akzent-hell, 0.2);
+    }
+}
+
+.editor-footer {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.zeichen-zaehler {
+    color:rgba($perlen-weiss, 0.5);
+    font-size: 0.85rem;
+}
+
+.toolbar-symbole {
+    display: flex; 
+    gap: 0.75rem; 
+
+    .symbol-btn {
+        font-size: 1.6rem; 
+        cursor: pointer;
+        min-width: 44px;
+        min-height: 44px; 
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        border-radius: 8px;
+        transition: transform 0.2s ease; 
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
+}
